@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+{% block title %}Search Article{% endblock %}
+
+{% block body %}
+{{form_start(form)}}
+{{form_widget(form)}}
+    <div class="row">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" name="SearchByFilter" class="btn btn-primary">Buscar</button>
+      <button type="submit" name="CreateNew" class="btn btn-primary">Crear Nuevo Articulo</button>
+    </div>
+  </div>
+    {% if articles is not empty %}
+        <table id="articles" class="table table-strippd">
+            <thead>
+                <tr>
+                    <th>
+                        Article Title
+                    </th>
+                    <th>
+                        Article Body
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>  
+            </thead>      
+            <tbody>
+                {% for article in articles %}
+                    <tr>
+                        <td>
+                            {{article.title}}
+                        </td>
+                        <td>
+                            {% if article %}
+                            {{article.body}}
+                            {% else %}
+                            {{article.title}}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="/article/{{article.id}}" class="btn btn-dark">Show</a>
+                            <a href="/article/edit/{{article.id}}" class="btn btn-light" >Edit</a>
+                            <a href="#" class="btn btn-danger delete-article" data-id="{{article.id}}">Delete</a>
+                            
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+    {% endif %}
+    
+
+
+{{form_end(form)}}
+{% endblock %}
+{% block javascripts %}
+    <script src="/js/main.js"></script>
+{% endblock %}
